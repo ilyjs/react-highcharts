@@ -64,7 +64,7 @@ function chartsFactory(chartType, Highcharts) {
         }
     }
 
-    if (cutCode) {
+    if (isProdMode) {
         let PropTypes = require('prop-types')
 
         Charts.propTypes = {

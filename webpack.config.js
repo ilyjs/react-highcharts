@@ -13,7 +13,7 @@ module.exports = function (env) {
 
     const src = !env.p;
     plugins.push(new webpack.DefinePlugin({
-            cutCode: JSON.stringify(src)
+            cutCode: JSON.stringify(isProdMode)
         })
     );
 
