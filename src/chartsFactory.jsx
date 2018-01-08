@@ -67,7 +67,7 @@ function chartsFactory(chartType, Highcharts) {
     if (isProdMode) {
         let PropTypes = require('prop-types')
 
-        Charts.propTypes = {
+        Chart.propTypes = {
             config: PropTypes.object,
             isPureConfig: PropTypes.bool,
             neverReflow: PropTypes.bool,
@@ -75,12 +75,12 @@ function chartsFactory(chartType, Highcharts) {
             domProps: PropTypes.object
         }
     }
-    Charts.defaultProps = {
+    Chart.defaultProps = {
         callback: () => {
         },
         domProps: {}
     }
-    let result = Charts;
+    let result = Chart;
     result.Highcharts = Highcharts;
     result.withHighcharts = Highcharts => module.exports(chartType, Highcharts);
 
