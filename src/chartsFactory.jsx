@@ -4,7 +4,7 @@ const win = typeof global === 'undefined' ? window : global;
 
 function chartsFactory(chartType, Highcharts) {
 
-    class Charts extends Component {
+    class Chart extends Component {
         constructor() {
             super()
             this.chartType = chartType;
