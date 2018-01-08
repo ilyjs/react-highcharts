@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = function (env) {
     env = env || {};
@@ -9,17 +10,17 @@ module.exports = function (env) {
      * If -p flag is set, minify the files
      * @type {boolean}
      */
+
     const src = !env.p;
+    plugins.push(new webpack.DefinePlugin({
+        isProdMode: JSON.stringify(src)
+        })
+    );
+
     const filenamePostfix = src ? '.src' : '';
 
     if (!src) {
-        plugins.push(new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    drop_console: true,
-                    unsafe: true
-                }
-            })
-        )
+        plugins.push(new UglifyJsPlugin())
     }
 
     /**
@@ -28,7 +29,6 @@ module.exports = function (env) {
      */
     const bundles = env.b;
     const bundlePrefix = (bundles ? 'bundle/' : '');
-
 
     const highchartsExternals = {
         'highcharts/highmaps': {
@@ -70,7 +70,6 @@ module.exports = function (env) {
 
     externals.push(highchartsExternals);
 
-
     return {
         entry: {
             // Array syntax to workaround https://github.com/webpack/webpack/issues/300
@@ -84,13 +83,14 @@ module.exports = function (env) {
             rules: [
                 {
                     test: /\.jsx$/,
-
-                    use: {
+                    use: [{
                         loader: 'babel-loader',
-                        options: {
-                            presets: ['env', 'react', 'stage-2'],
+                        query: {
+                            cacheDirectory: true,
+                            presets: ['react', 'es2015', 'stage-2'],
+                            plugins: ["add-module-exports"]
                         }
-                    }
+                    }],
                 }
             ]
         },
