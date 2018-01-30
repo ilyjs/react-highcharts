@@ -1,0 +1,7 @@
+.idea
+node_modules
+.DS_Store
+dist
+modules
+demo/dist/*
+sandbox/node_modules/*
